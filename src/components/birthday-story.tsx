@@ -3,11 +3,7 @@ import {
   Gift,
   Heart,
   ImagePlus,
-  Music2,
-  Pause,
-  Play,
   Sparkles,
-  Volume2,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
@@ -178,36 +174,6 @@ function PhotoGallery() {
   </Section>;
 }
 
-function MusicPlayer() {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [playing, setPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
-
-  const loadAudio = (file: File | undefined) => {
-    if (!file) return;
-    setAudioUrl((currentUrl) => {
-      if (currentUrl) URL.revokeObjectURL(currentUrl);
-      return URL.createObjectURL(file);
-    });
-    setPlaying(false);
-    setProgress(0);
-  };
-
-  const togglePlayback = () => {
-    if (!audioRef.current) return;
-    if (playing) audioRef.current.pause();
-    else void audioRef.current.play();
-    setPlaying(!playing);
-  };
-
-  return <Section className="music-section"><Reveal className="mx-auto max-w-3xl text-center"><p className="eyebrow">Our little world</p><h2 className="section-title">Every friendship has a soundtrack...</h2>
-    <div className={cn("music-player mt-12", playing && "music-playing")}><div className="album"><Heart className="fill-primary text-primary" /></div><div className="min-w-0 text-left"><p className="truncate font-display text-lg font-bold">Tera Yaar Hoon Main</p><p className="text-sm text-muted-foreground">Add the song or its favourite part to play it here.</p><label className="sr-only" htmlFor="song-file">Choose a song clip</label><input id="song-file" type="file" accept="audio/*" onChange={(event) => loadAudio(event.target.files?.[0])} className="mt-3 block w-full text-xs text-muted-foreground file:mr-3 file:rounded-full file:border-0 file:bg-secondary file:px-3 file:py-2 file:font-semibold file:text-secondary-foreground" /><label className="sr-only" htmlFor="song-progress">Song progress</label><input id="song-progress" type="range" min="0" max="100" value={progress} disabled={!audioUrl} onChange={(event) => { const nextProgress = Number(event.target.value); setProgress(nextProgress); if (audioRef.current?.duration) audioRef.current.currentTime = audioRef.current.duration * nextProgress / 100; }} className="mt-4 w-full accent-primary" /></div><Button size="icon" className="h-12 w-12 shrink-0 rounded-full" onClick={togglePlayback} disabled={!audioUrl} aria-label={playing ? "Pause song preview" : "Play song preview"}>{playing ? <Pause /> : <Play />}</Button></div>
-    {audioUrl && <audio ref={audioRef} src={audioUrl} onTimeUpdate={() => { if (audioRef.current?.duration) setProgress(audioRef.current.currentTime / audioRef.current.duration * 100); }} onEnded={() => setPlaying(false)} />}
-    <p className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground"><Volume2 className="h-3 w-3" /> Music never starts automatically. Add a licensed song clip to listen.</p>
-  </Reveal></Section>;
-}
-
 function FriendshipScene() {
   return <section className="friendship-scene relative min-h-[90vh] overflow-hidden"><img src={friendshipNight} alt="A boy and his girl best friend sitting together beneath a crescent moon" loading="lazy" width={1536} height={1024} className="absolute inset-0 h-full w-full object-cover" /><div className="scene-overlay absolute inset-0" /><FloatingMagic dark /><div className="relative z-10 mx-auto flex min-h-[90vh] max-w-4xl items-end px-6 pb-20 text-center text-night-foreground sm:pb-28"><Reveal><p className="font-hand text-3xl leading-relaxed sm:text-5xl">Some people come into your life...<br /><span className="text-xl sm:text-2xl">They stay for a chapter. Some stay for a season. And then there are people who somehow become part of your story.</span></p><p className="mt-8 font-display text-2xl font-bold text-moon-glow">You're definitely one of those people.</p></Reveal></div></section>;
 }
@@ -237,5 +203,5 @@ function FinalScene() {
 export function BirthdayStory() {
   const [opened, setOpened] = useState(false);
   useEffect(() => { document.body.style.overflow = opened ? "" : "hidden"; return () => { document.body.style.overflow = ""; }; }, [opened]);
-  return <main className="birthday-story"><AnimatePresence>{!opened && <Intro onOpen={() => setOpened(true)} />}</AnimatePresence>{opened && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}><Countdown /><BirthdayHero /><EmotionalLetter /><YouJustKnow /><MemoryTimeline /><PersonalityCards /><ThankYou /><PhotoGallery /><MusicPlayer /><FriendshipScene /><LetterSection /><GiftReveal /><FinalScene /></motion.div>}</main>;
+  return <main className="birthday-story"><AnimatePresence>{!opened && <Intro onOpen={() => setOpened(true)} />}</AnimatePresence>{opened && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}><Countdown /><BirthdayHero /><EmotionalLetter /><YouJustKnow /><MemoryTimeline /><PersonalityCards /><ThankYou /><PhotoGallery /><FriendshipScene /><LetterSection /><GiftReveal /><FinalScene /></motion.div>}</main>;
 }
