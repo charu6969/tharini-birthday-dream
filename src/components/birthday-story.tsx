@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
-import friendshipNight from "@/assets/friendship-night.jpg";
+import friendshipNight from "@/assets/friendship-night-boy-girl.jpg";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -191,7 +191,7 @@ function MusicPlayer() {
 }
 
 function FriendshipScene() {
-  return <section className="friendship-scene relative min-h-[90vh] overflow-hidden"><img src={friendshipNight} alt="Two best friends sitting together beneath a crescent moon" loading="lazy" width={1536} height={1024} className="absolute inset-0 h-full w-full object-cover" /><div className="scene-overlay absolute inset-0" /><FloatingMagic dark /><div className="relative z-10 mx-auto flex min-h-[90vh] max-w-4xl items-end px-6 pb-20 text-center text-night-foreground sm:pb-28"><Reveal><p className="font-hand text-3xl leading-relaxed sm:text-5xl">Some people come into your life...<br /><span className="text-xl sm:text-2xl">They stay for a chapter. Some stay for a season. And then there are people who somehow become part of your story.</span></p><p className="mt-8 font-display text-2xl font-bold text-moon-glow">You're definitely one of those people.</p></Reveal></div></section>;
+  return <section className="friendship-scene relative min-h-[90vh] overflow-hidden"><img src={friendshipNight} alt="A boy and his girl best friend sitting together beneath a crescent moon" loading="lazy" width={1536} height={1024} className="absolute inset-0 h-full w-full object-cover" /><div className="scene-overlay absolute inset-0" /><FloatingMagic dark /><div className="relative z-10 mx-auto flex min-h-[90vh] max-w-4xl items-end px-6 pb-20 text-center text-night-foreground sm:pb-28"><Reveal><p className="font-hand text-3xl leading-relaxed sm:text-5xl">Some people come into your life...<br /><span className="text-xl sm:text-2xl">They stay for a chapter. Some stay for a season. And then there are people who somehow become part of your story.</span></p><p className="mt-8 font-display text-2xl font-bold text-moon-glow">You're definitely one of those people.</p></Reveal></div></section>;
 }
 
 function LetterSection() {

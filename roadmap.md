@@ -4,4 +4,4 @@
 - [x] Build scrapbook, music, letter, gift, and finale
 - [x] Add styling and metadata
 - [x] Verify mobile and desktop interactions
-- [ ] Correct friendship illustration to show a boy and girl best friend
+- [x] Correct friendship illustration to show a boy and girl best friend
