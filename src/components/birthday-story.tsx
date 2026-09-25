@@ -50,6 +50,7 @@ const traits = [
 
 const fullLetter = [
   "Dear Tharini,",
+  "At exactly 12:05 PM, 21 years ago, the world became a much better place.",
   "Happy 21st Birthday. ❤️",
   "I honestly don't know how to put everything we've been through into a few paragraphs.",
   "I've made you cry. I've annoyed you. I've probably tested your patience more times than I should have.",
