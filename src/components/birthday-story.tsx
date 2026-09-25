@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 const birthday = new Date(2026, 8, 26, 0, 0, 0);
 
 const letterLines = [
-  "Over the years, I've probably given you enough reasons to be annoyed with me...",
+  "In the little time we've had, I've probably given you enough reasons to be annoyed with me...",
   "I've made you cry more times than I'd ever want to admit.",
   "And somehow...",
   "I've also been lucky enough to be there when YOU were crying.",
@@ -53,11 +53,7 @@ const traits = [
   ["🤍", "Always there", "I don't say thank you enough for that."],
 ];
 
-const captions = [
-  "Us being us 💗", "Certified chaos.", "One of my favourite humans.", "Why are we like this? 😭",
-  "Somehow we survived.", "Core memory.", "That smile >>>", "Our little world.",
-  "Best kind of nonsense.", "Always on my side.", "A forever favourite.", "More memories soon...",
-];
+const captions = ["Us being us 💗", "A beautiful memory to keep forever."]; 
 
 const fullLetter = [
   "Dear Tharini,",
@@ -66,7 +62,8 @@ const fullLetter = [
   "I've made you cry. I've annoyed you. I've probably tested your patience more times than I should have.",
   "But you've also been there when I've needed someone. You've understood my mood without me having to explain it. You've noticed when something was wrong even when I tried pretending everything was fine.",
   "And that little ‘kuch toh hua haii mereko’ energy of yours... I don't know how you do it.",
-  "You're cute. You're caring. You're ridiculously understanding. And most importantly, you're YOU.",
+  "You're beautiful, caring, ridiculously understanding, and most importantly, you're YOU.",
+  "You are still my best friend, and I will always love you, Nidhi. No matter where life takes us, that will always mean something special to me.",
   "Thank you for standing by me. Thank you for listening. Thank you for understanding. Thank you for staying.",
   "I hope when you look back at your 21st birthday, you remember how loved and appreciated you are.",
   "You deserve beautiful things. You deserve happiness. You deserve people who understand your heart. And I hope I get to be one of those people for a very, very long time.",
@@ -176,17 +173,38 @@ function ThankYou() {
 }
 
 function PhotoGallery() {
-  return <Section className="scrapbook-section"><Reveal className="text-center"><p className="eyebrow">Reserved for our chaos</p><h2 className="section-title">The memory wall 📸</h2><p className="mx-auto mt-4 max-w-lg text-muted-foreground">Twelve little spaces waiting for the moments only we understand.</p></Reveal>
-    <div className="photo-grid mt-14">{captions.map((caption, i) => <Reveal key={caption} delay={(i % 4) * .05}><motion.div whileHover={{ rotate: 0, y: -8, scale: 1.03 }} className="polaroid" style={{ transform: `rotate(${[-3, 2, -1, 3][i % 4]}deg)` }}><div className="photo-placeholder"><ImagePlus /><span>memory {String(i + 1).padStart(2, "0")}</span></div><p className="font-hand">{caption}</p></motion.div></Reveal>)}</div>
+  return <Section className="scrapbook-section"><Reveal className="text-center"><p className="eyebrow">Reserved for our chaos</p><h2 className="section-title">The memory wall 📸</h2><p className="mx-auto mt-4 max-w-lg text-muted-foreground">Two little spaces for the memories we already have, with more waiting for us.</p></Reveal>
+    <div className="photo-grid mt-14">{captions.map((caption, i) => <Reveal key={caption} delay={i * .08}><motion.div whileHover={{ rotate: 0, y: -8, scale: 1.03 }} className="polaroid" style={{ transform: `rotate(${[-3, 2][i]}deg)` }}><div className="photo-placeholder"><ImagePlus /><span>your photo {String(i + 1).padStart(2, "0")}</span></div><p className="font-hand">{caption}</p></motion.div></Reveal>)}</div>
   </Section>;
 }
 
 function MusicPlayer() {
+  const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
-  const [progress, setProgress] = useState(34);
+  const [progress, setProgress] = useState(0);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+
+  const loadAudio = (file: File | undefined) => {
+    if (!file) return;
+    setAudioUrl((currentUrl) => {
+      if (currentUrl) URL.revokeObjectURL(currentUrl);
+      return URL.createObjectURL(file);
+    });
+    setPlaying(false);
+    setProgress(0);
+  };
+
+  const togglePlayback = () => {
+    if (!audioRef.current) return;
+    if (playing) audioRef.current.pause();
+    else void audioRef.current.play();
+    setPlaying(!playing);
+  };
+
   return <Section className="music-section"><Reveal className="mx-auto max-w-3xl text-center"><p className="eyebrow">Our little world</p><h2 className="section-title">Every friendship has a soundtrack...</h2>
-    <div className={cn("music-player mt-12", playing && "music-playing")}><div className="album"><Heart className="fill-primary text-primary" /></div><div className="min-w-0 text-left"><p className="truncate font-display text-lg font-bold">Our song goes here</p><p className="text-sm text-muted-foreground">A little placeholder for your chosen song</p><label className="sr-only" htmlFor="song-progress">Song progress</label><input id="song-progress" type="range" min="0" max="100" value={progress} onChange={(e) => setProgress(Number(e.target.value))} className="mt-4 w-full accent-primary" /></div><Button size="icon" className="h-12 w-12 shrink-0 rounded-full" onClick={() => setPlaying(!playing)} aria-label={playing ? "Pause song preview" : "Play song preview"}>{playing ? <Pause /> : <Play />}</Button></div>
-    <p className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground"><Volume2 className="h-3 w-3" /> Music never starts automatically</p>
+    <div className={cn("music-player mt-12", playing && "music-playing")}><div className="album"><Heart className="fill-primary text-primary" /></div><div className="min-w-0 text-left"><p className="truncate font-display text-lg font-bold">Tera Yaar Hoon Main</p><p className="text-sm text-muted-foreground">Add the song or its favourite part to play it here.</p><label className="sr-only" htmlFor="song-file">Choose a song clip</label><input id="song-file" type="file" accept="audio/*" onChange={(event) => loadAudio(event.target.files?.[0])} className="mt-3 block w-full text-xs text-muted-foreground file:mr-3 file:rounded-full file:border-0 file:bg-secondary file:px-3 file:py-2 file:font-semibold file:text-secondary-foreground" /><label className="sr-only" htmlFor="song-progress">Song progress</label><input id="song-progress" type="range" min="0" max="100" value={progress} disabled={!audioUrl} onChange={(event) => { const nextProgress = Number(event.target.value); setProgress(nextProgress); if (audioRef.current?.duration) audioRef.current.currentTime = audioRef.current.duration * nextProgress / 100; }} className="mt-4 w-full accent-primary" /></div><Button size="icon" className="h-12 w-12 shrink-0 rounded-full" onClick={togglePlayback} disabled={!audioUrl} aria-label={playing ? "Pause song preview" : "Play song preview"}>{playing ? <Pause /> : <Play />}</Button></div>
+    {audioUrl && <audio ref={audioRef} src={audioUrl} onTimeUpdate={() => { if (audioRef.current?.duration) setProgress(audioRef.current.currentTime / audioRef.current.duration * 100); }} onEnded={() => setPlaying(false)} />}
+    <p className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground"><Volume2 className="h-3 w-3" /> Music never starts automatically. Add a licensed song clip to listen.</p>
   </Reveal></Section>;
 }
 
