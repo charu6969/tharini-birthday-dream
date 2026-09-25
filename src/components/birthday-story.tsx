@@ -2,7 +2,6 @@ import { AnimatePresence, motion, useInView } from "motion/react";
 import {
   Gift,
   Heart,
-  ImagePlus,
   Sparkles,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
@@ -48,8 +47,6 @@ const traits = [
   ["👀", "Always knows", "Somehow, before I say a word."],
   ["🤍", "Always there", "I don't say thank you enough for that."],
 ];
-
-const captions = ["Us being us 💗", "A beautiful memory to keep forever."]; 
 
 const fullLetter = [
   "Dear Tharini,",
@@ -168,12 +165,6 @@ function ThankYou() {
   return <Section className="midnight-section text-center text-night-foreground"><FloatingMagic dark /><div className="mx-auto max-w-3xl">{lines.map((line, i) => <Reveal key={line}><p className={cn("my-8 text-xl leading-relaxed sm:text-3xl", i === 0 && "font-hand text-4xl", i === lines.length - 1 && "font-display font-bold text-moon-glow")}>{line}</p></Reveal>)}<Reveal><h2 className="thank-you font-hand mt-20 text-7xl">Thank you.</h2></Reveal></div></Section>;
 }
 
-function PhotoGallery() {
-  return <Section className="scrapbook-section"><Reveal className="text-center"><p className="eyebrow">Reserved for our chaos</p><h2 className="section-title">The memory wall 📸</h2><p className="mx-auto mt-4 max-w-lg text-muted-foreground">Two little spaces for the memories we already have, with more waiting for us.</p></Reveal>
-    <div className="photo-grid mt-14">{captions.map((caption, i) => <Reveal key={caption} delay={i * .08}><motion.div whileHover={{ rotate: 0, y: -8, scale: 1.03 }} className="polaroid" style={{ transform: `rotate(${[-3, 2][i]}deg)` }}><div className="photo-placeholder"><ImagePlus /><span>your photo {String(i + 1).padStart(2, "0")}</span></div><p className="font-hand">{caption}</p></motion.div></Reveal>)}</div>
-  </Section>;
-}
-
 function FriendshipScene() {
   return <section className="friendship-scene relative min-h-[90vh] overflow-hidden"><img src={friendshipNight} alt="A boy and his girl best friend sitting together beneath a crescent moon" loading="lazy" width={1536} height={1024} className="absolute inset-0 h-full w-full object-cover" /><div className="scene-overlay absolute inset-0" /><FloatingMagic dark /><div className="relative z-10 mx-auto flex min-h-[90vh] max-w-4xl items-end px-6 pb-20 text-center text-night-foreground sm:pb-28"><Reveal><p className="font-hand text-3xl leading-relaxed sm:text-5xl">Some people come into your life...<br /><span className="text-xl sm:text-2xl">They stay for a chapter. Some stay for a season. And then there are people who somehow become part of your story.</span></p><p className="mt-8 font-display text-2xl font-bold text-moon-glow">You're definitely one of those people.</p></Reveal></div></section>;
 }
@@ -203,5 +194,5 @@ function FinalScene() {
 export function BirthdayStory() {
   const [opened, setOpened] = useState(false);
   useEffect(() => { document.body.style.overflow = opened ? "" : "hidden"; return () => { document.body.style.overflow = ""; }; }, [opened]);
-  return <main className="birthday-story"><AnimatePresence>{!opened && <Intro onOpen={() => setOpened(true)} />}</AnimatePresence>{opened && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}><Countdown /><BirthdayHero /><EmotionalLetter /><YouJustKnow /><MemoryTimeline /><PersonalityCards /><ThankYou /><PhotoGallery /><FriendshipScene /><LetterSection /><GiftReveal /><FinalScene /></motion.div>}</main>;
+  return <main className="birthday-story"><AnimatePresence>{!opened && <Intro onOpen={() => setOpened(true)} />}</AnimatePresence>{opened && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}><Countdown /><BirthdayHero /><EmotionalLetter /><YouJustKnow /><MemoryTimeline /><PersonalityCards /><ThankYou /><FriendshipScene /><LetterSection /><GiftReveal /><FinalScene /></motion.div>}</main>;
 }
